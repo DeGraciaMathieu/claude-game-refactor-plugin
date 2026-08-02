@@ -1,0 +1,14 @@
+{
+  "name": "claude-game-refactor-plugin",
+  "owner": {
+    "name": "DeGraciaMathieu"
+  },
+  "description": "Game prototype refactoring toolkit for Claude Code.",
+  "plugins": [
+    {
+      "name": "game-refactor",
+      "source": "./",
+      "description": "Turns a single-file HTML/CSS/JS game prototype into a split, tested and documented codebase."
+    }
+  ]
+}

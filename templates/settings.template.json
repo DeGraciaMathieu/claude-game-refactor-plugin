@@ -1,0 +1,24 @@
+{
+  "_comment": "TEMPLATE — copy into <target repo>/.claude/settings.json (versioned and shared, NOT settings.local.json). Adapt the agent prompt to the project's real living documentation, or drop the second hook entirely if the project has none.",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/run-tests.sh\"",
+            "timeout": 120,
+            "statusMessage": "Running tests…"
+          },
+          {
+            "type": "agent",
+            "prompt": "You are the documentation consistency checker for this project. The living documentation is <DOC FILE> — the human-readable text describing the game's rules and behaviour. Values imported or generated from <CONFIG MODULE> are rendered dynamically: ignore them entirely, including the tables and numbers built from them. Only the hand-written prose must stay exact. Run: git diff HEAD -- <SOURCE DIRS> <DOC FILE>. If nothing relevant changed, or if the documentation still describes the code faithfully, reply exactly: accept. Otherwise reply: block, then list each stale passage — quote it, give its location, and state the correction the code now requires. Do not rewrite the documentation yourself and do not report style issues.",
+            "model": "claude-sonnet-4-6",
+            "timeout": 120,
+            "statusMessage": "Checking documentation sync…"
+          }
+        ]
+      }
+    ]
+  }
+}
