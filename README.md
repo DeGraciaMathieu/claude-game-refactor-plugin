@@ -48,3 +48,17 @@ Then, in Claude Code:
 The templates are not active: they are models the commands copy into the target
 project's `scripts/run-tests.sh`, `docs/decisions.md` and `.claude/settings.json`,
 via `${CLAUDE_PLUGIN_ROOT}/templates/`.
+
+## Built with it
+
+Small games that went through this pipeline — all playable:
+
+- [orbite](https://orbite-eight.vercel.app/)
+- [warhex](https://warhex.degracia-mathieu.fr/)
+- [theater of war](https://theater-of-war.vercel.app/)
+- [battle for montélimar](https://battle-for-montelimar.vercel.app/)
+- [mémoire 44](https://memoire-44.vercel.app/)
+- [jurassic nightmare](https://jurassic-nightmare.vercel.app/)
+- [cordon exchange](https://cordon-exchange.vercel.app/)
+- [fragline](https://fragline.vercel.app/)
+- [dwarf](https://dwarf-ten.vercel.app/)
