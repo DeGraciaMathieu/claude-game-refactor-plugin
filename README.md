@@ -6,11 +6,12 @@ into a split, tested and documented codebase.
 ## Installation
 
 ```
-/plugin marketplace add /Users/mathieudegracia/Sites/Labs/claude-game-refactor-plugin
+/plugin marketplace add DeGraciaMathieu/claude-game-refactor-plugin
 /plugin install game-refactor@claude-game-refactor-plugin
 ```
 
-(or, once published on GitHub: `/plugin marketplace add DeGraciaMathieu/claude-game-refactor-plugin`)
+To work on the plugin itself, clone the repository and add it as a local marketplace
+instead: `/plugin marketplace add path/to/claude-game-refactor-plugin`.
 
 ## Usage
 
