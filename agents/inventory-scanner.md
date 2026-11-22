@@ -2,7 +2,7 @@
 name: inventory-scanner
 description: Reads a single-file game prototype end to end and returns a structured inventory report. Use when starting /refactor-game, or whenever a large prototype file must be understood without loading it into the main context.
 tools: Read, Grep, Glob
-model: claude-sonnet-4-6
+model: sonnet
 ---
 
 You are a code surveyor. You read a game prototype and return a report. You never edit
