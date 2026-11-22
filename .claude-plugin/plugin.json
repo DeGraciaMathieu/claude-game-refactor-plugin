@@ -1,7 +1,7 @@
 {
   "name": "game-refactor",
   "description": "Turns a single-file HTML/CSS/JS game prototype into a split, tested and documented codebase — /refactor-game then /scaffold-claude.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": {
     "name": "DeGraciaMathieu",
     "email": "degracia.mathieu@nublar.dev"
