@@ -25,17 +25,19 @@ Then, in Claude Code:
 
 ```
 /refactor-game index.html    # splits the prototype, tests first
-/scaffold-claude             # generates CLAUDE.md, project skills, commands, Stop hook
+/scaffold-claude             # generates CLAUDE.md, project skills, Stop hook
 ```
 
 `/refactor-game` stops twice to wait for your approval: after the plan
 (archetype, toolchain, extraction order) and after the rules extraction.
+`/scaffold-claude` stops once, after its plan, and offers the optional extras (a `prd`
+skill, `review` / `check-conventions` / `check-tests` commands).
 
 ## Contents
 
 | Path | Role |
 | --- | --- |
-| `commands/refactor-game.md` | Orchestrator: 6 steps, 2 validation gates |
+| `commands/refactor-game.md` | Orchestrator: 7 steps, 2 validation gates |
 | `commands/scaffold-claude.md` | Generates the project's Claude Code ecosystem |
 | `skills/game-inventory/` | What to record in a prototype, report format |
 | `skills/toolchain-decision/` | Deterministic tree: zero-build by default, Vite on signal |

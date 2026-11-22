@@ -6,8 +6,9 @@ argument-hint: [optional: path to the project root, defaults to the repository r
 # /scaffold-claude
 
 Generate, inside the target repository, the documentation and tooling Claude Code will
-use on it: a root `CLAUDE.md`, domain skills, workflow skills, slash commands and a Stop
-hook.
+use on it: a root `CLAUDE.md`, domain skills, a `feature` workflow skill and a Stop hook.
+A `prd` skill and the review commands are optional extras, generated only when the user
+picks them at step 1.
 
 ## Golden rule
 
@@ -39,8 +40,16 @@ and carry its open questions into your own.
 ## Step 1 — Validate the plan
 
 Before generating anything, present: the detected stack and commands, the proposed domain
-skills (name + one-line scope), the proposed commands, and the open questions. **Wait for
-the user's approval.**
+skills (name + one-line scope), whether the doc-sync hook applies (step 6, guardrail b),
+and the open questions.
+
+Then offer the optional extras, unselected by default, and let the user pick any of them:
+
+- the **`prd`** skill (step 4);
+- the **`review`**, **`check-conventions`** and **`check-tests`** commands (step 5).
+
+They pay off on a project that will keep growing; on one that is mostly finished they are
+dead weight. **Wait for the user's approval and their choice of extras.**
 
 ## Step 2 — `CLAUDE.md` (repository root)
 
@@ -76,22 +85,24 @@ Always create, on top of the domain ones:
 
 ## Step 4 — Workflow skills
 
-- **`feature`** (`user_invocable: true`) — understand the request (restate it, invoke
-  `architecture`, ask the clarifying questions: numeric values, interactions with what
-  already exists, edge cases) → implement within the architecture and `CLAUDE.md` →
+- **`feature`** (always, `user_invocable: true`) — understand the request (restate it,
+  invoke `architecture`, ask the clarifying questions: numeric values, interactions with
+  what already exists, edge cases) → implement within the architecture and `CLAUDE.md` →
   test at macro level and fix until green → update `CLAUDE.md` / the skills / the in-app
   documentation if the scope moved → summarise files changed, tests added, result.
-- **`prd`** — explore the existing code to fill in the technical baseline, ask only the
-  product decisions, then write a PRD in a fixed format: Goal / Technical baseline /
-  Behaviour / Out of scope / Impact per layer / Acceptance criteria / Tests / Risks and
-  open questions. Implements nothing: it is a specification document.
+- **`prd`** (only if picked at step 1) — explore the existing code to fill in the
+  technical baseline, ask only the product decisions, then write a PRD in a fixed format:
+  Goal / Technical baseline / Behaviour / Out of scope / Impact per layer / Acceptance
+  criteria / Tests / Risks and open questions. Implements nothing: it is a specification
+  document.
 
 ## Step 5 — Commands (`.claude/commands/`)
 
-All follow the same skeleton: read `CLAUDE.md` → get the scope via `git diff`,
-`git diff --cached`, `git status`, `git log --oneline -5` → stop if there is nothing →
-check point by point → run the tests → structured report with a per-item status
-(OK / VIOLATION / N/A) and an overall verdict.
+Only the commands picked at step 1. Skip this step if none was. All follow the same
+skeleton: read `CLAUDE.md` → get the scope via `git diff`, `git diff --cached`,
+`git status`, `git log --oneline -5` → stop if there is nothing → check point by point →
+run the tests → structured report with a per-item status (OK / VIOLATION / N/A) and an
+overall verdict.
 
 - **`review`** — the most complete: conventions + test coverage + maintainability
   (coupling, single responsibility, duplication, function length/complexity, naming, magic
@@ -118,6 +129,12 @@ auto-generated and must be ignored, what text must stay exact, which `git diff H
 <source dirs> <doc file>` to run, and the strict output rule — reply exactly `accept` if
 nothing changed or if the doc still reflects the changes, otherwise `block` listing the
 stale passages and the expected correction.
+
+Keep the two tolerances already in the template prompt: fall back to reading the files
+directly when `git diff` is unavailable, and do not block on gaps already recorded in
+`docs/decisions.md` (*Deliberately left alone*, *Open questions*). Keep the `git diff`
+permission entry from the template so the hook can run it without a prompt. Do not pin a
+model on the hook.
 
 Guardrail (b) is optional: add it only if the project actually has textual documentation
 that can drift. If it does not, ship the test hook alone.
